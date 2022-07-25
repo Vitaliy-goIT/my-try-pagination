@@ -1,5 +1,5 @@
 const ulTag = document.querySelector('ul');
-const totalPages = 20;
+const totalPages = 8;
 function element(totalPages, page) {
   let liTag = '';
   let activeLi;
@@ -19,9 +19,14 @@ function element(totalPages, page) {
   }
 
   if (page > 2 && page != 3) {
-    liTag += `<li class="numb" onclick="element(totalPages, 1)"><span>1</span></li>`;
-    if (page > 4) {
-      liTag += `<li class="dots"><span>. . .</span></li>`;
+    if (totalPages >= page && totalPages > 5) {
+      liTag += `<li class="numb" onclick="element(totalPages, 1)"><span>1</span></li>`;
+      if (page > 4 && totalPages > 7) {
+        liTag += `<li class="dots"><span>. . .</span></li>`;
+      }
+      if (page > 4 && totalPages === 7) {
+        liTag += `<li class="numb" onclick="element(totalPages, 2)"><span>2</span></li>`;
+      }
     }
   }
 
@@ -54,9 +59,19 @@ function element(totalPages, page) {
     liTag += `<li class="numb ${activeLi}" onclick="element(totalPages, ${pageLength})"><span>${pageLength}</span></li>`;
   }
 
-  if (page < totalPages - 1 && page != totalPages - 2) {
-    if (page < totalPages - 3) {
+  if (
+    page < totalPages - 1 &&
+    page != totalPages - 2 &&
+    totalPages >= totalPages - 1 &&
+    totalPages > 5
+  ) {
+    if (page < totalPages - 3 && totalPages > 7) {
       liTag += `<li class="dots"><span>. . .</span></li>`;
+    }
+    if (page < totalPages - 3 && totalPages === 7) {
+      liTag += `<li class="numb" onclick="element(totalPages, ${totalPages - 1})"><span>${
+        totalPages - 1
+      }</span></li>`;
     }
     liTag += `<li class="numb" onclick="element(totalPages, ${totalPages})"><span>${totalPages}</span></li>`;
   }
@@ -76,4 +91,4 @@ function element(totalPages, page) {
   ulTag.innerHTML = liTag;
 }
 
-element(totalPages, 5);
+element(totalPages, 3);
